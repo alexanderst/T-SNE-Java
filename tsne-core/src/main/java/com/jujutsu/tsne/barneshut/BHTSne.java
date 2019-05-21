@@ -36,6 +36,7 @@ import static java.lang.Math.exp;
 import static java.lang.Math.log;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -53,7 +54,7 @@ public class BHTSne implements BarnesHutTSne {
 		return run(config);
 	}
 
-	private double[] flatten(double[][] x) {
+	public static double[] flatten(double[][] x) {
 		int noCols = x[0].length;
 		double [] flat = new double[x.length*x[0].length];
 		for (int i = 0; i < x.length; i++) {
@@ -159,7 +160,14 @@ public class BHTSne implements BarnesHutTSne {
 
 		// Compute input similarities for approximate t-SNE
 		else {
-
+			// Mock to override random initialization, to compare strictly
+			X = new double[]{0.2999816948164936, 0.26252049735806526, 0.2673853427498767, 0.8604464129156685, 0.4802652829902563, 0.10959096539488711, 0.7950242948008909, 0.5917848948003486,
+					0.2738285999345498, 0.9519684328285567, 0.9690024759209738, 0.8585615547624705, 0.8087760944312002, 0.5337951589543348, 0.5960876109129123, 0.7187130179825856,
+					0.4629777327445964, 0.08665909175584818, 0.7748005397731237, 0.48020186965468536, 0.24927351841378798, 0.32272599988270445, 0.306414968984427, 0.6980212149215657,
+					0.7977183964212472, 0.7673513094629704, 0.1679681724796478, 0.3107359484804584, 0.021701726051792103, 0.13797462786662518, 0.8618953518813538, 0.841333838365635,
+					0.5284957375170422, 0.9703367685039823, 0.677388096913733, 0.2624474979832243, 0.43740966353106536, 0.15685545957858893, 0.11072929134449871, 0.06007395961283357,
+					0.4093918718557811, 0.9563909195720572, 0.5994144944480242, 0.8278927844215804, 0.38586830957105667, 0.6201844716257464, 0.7603829079070265, 0.07875691596842949,
+					0.08651136699915507, 0.7445210640026082, 0.6547649514127559, 0.3384719042666908, 0.05816723105860, 0.6248951423054205, 0.7431868493349041};
 			// Compute asymmetric pairwise input similarities
 			computeGaussianPerplexity(X, N, D, row_P, col_P, val_P, perplexity, K);
 
@@ -182,7 +190,7 @@ public class BHTSne implements BarnesHutTSne {
 		else {      for(int i = 0; i < row_P[N]; i++) val_P[i] *= 12.0; }
 
 		// Initialize solution (randomly)
-		for(int i = 0; i < N * no_dims; i++) Y[i] = ThreadLocalRandom.current().nextDouble() * 0.0001;
+		for(int i = 0; i < N * no_dims; i++) Y[i] = X[i]; //ThreadLocalRandom.current().nextDouble() * 0.0001;
 
 		// Perform main training loop
 		if(exact) System.out.printf("Done in %4.2f seconds!\nLearning embedding...\n", (end - start) / 1000.0);
@@ -711,6 +719,11 @@ public class BHTSne implements BarnesHutTSne {
 			this.sym_row_P = sym_row_P;
 			this.sym_col_P = sym_col_P;
 			this.sym_val_P = sym_val_P;
+		}
+
+		@Override
+		public String toString() {
+			 return/* Arrays.toString(sym_row_P) + " " + Arrays.toString(sym_col_P) + " " +*/  Arrays.toString(sym_val_P);
 		}
 	}
 

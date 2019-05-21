@@ -8,7 +8,7 @@ import com.jujutsu.utils.MatrixOps;
 public class SPTree {
 
 	  // Fixed constants
-    final static int QT_NODE_CAPACITY = 1;
+    final static int QT_NODE_CAPACITY = 11; //1;
         
 	protected SPTree parent;
 	protected int dimension;
