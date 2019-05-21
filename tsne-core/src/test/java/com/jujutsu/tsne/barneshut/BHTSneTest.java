@@ -56,7 +56,7 @@ public class BHTSneTest {
         int initial_dims = 5;
         double perplexity = 3.0;
         //double[][] X = MatrixUtils.simpleRead2DMatrix(new File("src/main/resources/datasets/mnist2500_X.txt"), "   ");
-        TSneConfiguration config = TSneUtils.buildConfig(aData, 5, initial_dims, perplexity, 20, false, 0.5, false);
+        TSneConfiguration config = TSneUtils.buildConfig(aData, 5, initial_dims, perplexity, 200, false, 0.5, false);
         config.setXin(aData);
 
         BHTSne tsne = new BHTSne();
